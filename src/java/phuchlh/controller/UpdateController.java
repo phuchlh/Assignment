@@ -11,25 +11,20 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import phuchlh.user.UserDAO;
+import phuchlh.user.UserDTO;
 
 /**
  *
  * @author Phúc
  */
-public class MainController extends HttpServlet {
-    
-    private static final String ERROR = "error.html";
-    private static final String LOGIN_CONTROLLER = "LoginController";
-    private static final String LOGOUT_CONTROLLER = "LogoutController";
-    private static final String SEARCH_CONTROLLER = "SearchController";
-    private static final String DELETE_CONTROLLER = "DeleteController";
-    private static final String UPDATE_CONTROLLER = "UpdateController";
-    private static final String CREATE_CONTROLLER = "CreateController";
-    private static final String ADD_TO_CART_CONTROLLER = "AddToCartController";
-    private static final String VIEW_CART_CONTROLLER = "ViewCartController";
-    private static final String CHECKOUT_CONTROLLER = "CheckoutController";
-    private static final String SHOPPING_CONTROLLER = "ShoppingController";
-    private static final String REMOVE_CONTROLLER = "RemoveController";
+public class UpdateController extends HttpServlet {
+
+    private static final String ERROR = "searchUser.jsp";
+    private static final String SUCCESS = "SearchController";
+    private static final String LOGOUT = "LogoutController";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,34 +38,37 @@ public class MainController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        String action = request.getParameter("btAction");
-        try{
-            if("".equals(action)) {
-                
-            }else if("Login".equals(action)) {
-                url = LOGIN_CONTROLLER;
-            }else if("Logout".equals(action)) {
-                url = LOGOUT_CONTROLLER;
-            }else if("Search".equals(action)) {
-                url = SEARCH_CONTROLLER;
-            }else if("Delete".equals(action)) {
-                url = DELETE_CONTROLLER;
-            }else if("Update".equals(action)) {
-                url = UPDATE_CONTROLLER;
-            }else if("Create".equals(action)) {
-                url = CREATE_CONTROLLER;
-            }else if("Add to cart".equals(action)) {
-                url = ADD_TO_CART_CONTROLLER;
-            }else if("View cart".equals(action)) {
-                url = VIEW_CART_CONTROLLER;
-            }else if("Checkout".equals(action)) {
-                url = CHECKOUT_CONTROLLER;
-            }else if("Shopping".equals(action)) {
-                url = SHOPPING_CONTROLLER;
-            }else if("Remove".equals(action)) {
-                url = REMOVE_CONTROLLER;
+        try {
+            String userID = request.getParameter("txtUserID");
+            String fullname = request.getParameter("txtFullName");
+            String address = request.getParameter("txtAddress");
+            String status = request.getParameter("txtStatus");
+            String roleID = request.getParameter("cbRole");
+            if (roleID != null) {
+                roleID = "AD";
+            } else {
+                roleID = "US";
             }
-        }finally{
+            if (status.equals("active") || status.equals("disable")) {
+                UserDAO dao = new UserDAO();
+                UserDTO dto = new UserDTO(userID, "", fullname, address, roleID, status);
+                boolean check = dao.updateUser(dto);
+                if (check) {
+                    HttpSession session = request.getSession();
+                    UserDTO loginUser = (UserDTO) session.getAttribute("USER");
+                    if (loginUser.getUserID().equals(userID)) {
+                        url = LOGOUT;
+                    } else {
+                        url = SUCCESS;
+                    }
+                }
+            } else {
+                url = ERROR;
+            }
+
+        } catch (Exception e) {
+            log("Have error at update controller" + e.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

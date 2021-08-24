@@ -7,32 +7,25 @@ package phuchlh.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import phuchlh.cart.CartDAO;
 
 /**
  *
  * @author Phúc
  */
-public class MainController extends HttpServlet {
-    
-    private static final String ERROR = "error.html";
-    private static final String LOGIN_CONTROLLER = "LoginController";
-    private static final String LOGOUT_CONTROLLER = "LogoutController";
-    private static final String SEARCH_CONTROLLER = "SearchController";
-    private static final String DELETE_CONTROLLER = "DeleteController";
-    private static final String UPDATE_CONTROLLER = "UpdateController";
-    private static final String CREATE_CONTROLLER = "CreateController";
-    private static final String ADD_TO_CART_CONTROLLER = "AddToCartController";
-    private static final String VIEW_CART_CONTROLLER = "ViewCartController";
-    private static final String CHECKOUT_CONTROLLER = "CheckoutController";
-    private static final String SHOPPING_CONTROLLER = "ShoppingController";
-    private static final String REMOVE_CONTROLLER = "RemoveController";
+public class CheckoutController extends HttpServlet {
+
+    private static final String ERROR = "store.jsp";
+    private static final String SUCCESS = "store.jsp";
+
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -43,34 +36,23 @@ public class MainController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        String action = request.getParameter("btAction");
-        try{
-            if("".equals(action)) {
-                
-            }else if("Login".equals(action)) {
-                url = LOGIN_CONTROLLER;
-            }else if("Logout".equals(action)) {
-                url = LOGOUT_CONTROLLER;
-            }else if("Search".equals(action)) {
-                url = SEARCH_CONTROLLER;
-            }else if("Delete".equals(action)) {
-                url = DELETE_CONTROLLER;
-            }else if("Update".equals(action)) {
-                url = UPDATE_CONTROLLER;
-            }else if("Create".equals(action)) {
-                url = CREATE_CONTROLLER;
-            }else if("Add to cart".equals(action)) {
-                url = ADD_TO_CART_CONTROLLER;
-            }else if("View cart".equals(action)) {
-                url = VIEW_CART_CONTROLLER;
-            }else if("Checkout".equals(action)) {
-                url = CHECKOUT_CONTROLLER;
-            }else if("Shopping".equals(action)) {
-                url = SHOPPING_CONTROLLER;
-            }else if("Remove".equals(action)) {
-                url = REMOVE_CONTROLLER;
+        try {
+            Timestamp realTime = new Timestamp(System.currentTimeMillis());
+            String status = "active";
+            String totalPrice = request.getParameter("txtTotal");
+            HttpSession session = request.getSession();
+            String userID = (String) session.getAttribute("NOW");
+            CartDAO dao = new CartDAO();
+            boolean check = dao.checkout(status, totalPrice, userID, realTime);
+            if (check) {
+                boolean changeStatus = dao.changeStatus(userID);
+                if (changeStatus) {
+                    url = SUCCESS;
+                }
             }
-        }finally{
+        } catch (Exception e) {
+            log("Have error at checkout controller" + e.toString());
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

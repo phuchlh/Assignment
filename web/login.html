@@ -9,15 +9,21 @@ and open the template in the editor.
         <title>LOGIN</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="loginCSS.css" rel="stylesheet">
     </head>
     <body>
-        <div>Login page</div>
+        <h1>Login page</h1>
+
         <form action="MainController" method="POST">
             userID<input type="text" name="txtUserID" value="" /></br>
             password: <input type="password" name="txtPassword" value="" /></br>
             <input type="submit" value="Login" name="btAction" />
             <input type="reset" value="Reset" /></br>
         </form>
-        Going to <a href="store.jsp">car shop</a>
+                <form action="MainController">
+                    <input type="submit" value="Shopping" name="btAction" />
+                </form>
+        <!--<a href="store.jsp">shop</a>-->
+        Dont have an account? <a href="insert.jsp">register now</a>
     </body>
 </html>

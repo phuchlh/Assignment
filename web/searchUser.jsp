@@ -47,7 +47,7 @@
                     <th>Password</th>
                     <th>Full Name</th>
                     <th>Address</th>
-                    <th>Role ID</th>
+                    <th>Admin</th>
                     <th>Status</th>
                     <th>Delete</th>
                     <th>Update</th>
@@ -56,38 +56,70 @@
             <tbody>
                 <%
                     int count = 0;
+                    String userNow = (String) session.getAttribute("NOW");
+                    System.out.println("user now - " + userNow);
                     for (UserDTO user : listUser) {
                         String urlRewriting = "MainController"
                                 + "?btAction=Delete"
-                                + "&pk="+user.getUserID()
-                                + "&lastSearchValue="+ search;
-                        
+                                + "&deleteUser=" + user.getUserID()
+                                + "&lastSearchValue=" + search;
+                        boolean checkDelete = (user.getUserID()).equals(userNow);
                 %>
+            <form action="MainController">
                 <tr>
                     <td><%= ++count%></td>
                     <td>
-                        <input type="text" name="txtUserHidden" value="<%= user.getUserID() %>" />
+                        <input type="text" name="txtUserID" value="<%= user.getUserID()%>" />
                     </td>
                     <td><%= user.getPassword()%></td>
-                    <td><%= user.getFullname()%></td>
-                    <td><%= user.getAddress()%></td>
-                    <td><%= user.getRoleID()%></td>
-                    <td><%= user.getStatus()%></td>
                     <td>
-                        <form action="MainController">
-                            <input type="submit" value="Delete" name="btAction" />
-                            <input type="hidden" name="txtUserDelete" value="<%= user.getUserID() %>" />
-                        </form>
+                        <input type="text" name="txtFullName" value="<%= user.getFullname()%>" />
+                    </td>
+                    <td>
+                        <input type="text" name="txtAddress" value="<%= user.getAddress()%>" />
+                    </td>
+                    <td>
+                        <input type="checkbox" name="cbRole" value="<%= user.getRoleID()%>"
+                               <%
+                                   if ((user.getRoleID()).equals("AD")) {
+                               %>
+                               checked="checked"<%
+                                   }
+                               %>/>
+                    </td>
+                    <td> <input type="text" name="txtStatus" value="<%= user.getStatus()%>" /> </td>
+                    <td>
+                        <%
+                            if (checkDelete) {
+                        %>
+                        <p>Mission impossible because this user are currently available</p>
+                        <%
+                        } else if (user.getStatus().equals("disable")) {
+                        %>
+                        <p>Can not delete user</p>
+                        <%
+                        } else {
+                        %>
+                        <p><a href="<%= urlRewriting%>">Delete</a></p>
+                        <input type="hidden" name="lastSearchValue" value="<%= search%>" />
+                        <%
+                            }
+                        %>
+                    </td>
+                    <td>
+                        <input type="submit" value="Update" name="btAction" />
+                        <input type="hidden" name="txtSearch" value="<%= search%>" />
                     </td>
                 </tr>
-                <%
-                    }
-                %>
-            </tbody>
-        </table>
+            </form>
+            <%
+                }
+            %>
+        </tbody>
+    </table>
 
-        <%
-            }
-        %>
-    </body>
+    <%
+        }
+    %>
+</body>
 </html>

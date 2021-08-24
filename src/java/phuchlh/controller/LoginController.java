@@ -7,11 +7,15 @@ package phuchlh.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import phuchlh.car.CarDAO;
+import phuchlh.car.CarDTO;
 import phuchlh.user.UserDAO;
 import phuchlh.user.UserDTO;
 
@@ -20,13 +24,13 @@ import phuchlh.user.UserDTO;
  * @author Phúc
  */
 public class LoginController extends HttpServlet {
-    
-    private static final String ERROR = "invalid.html";
+
+    private static final String ERROR = "error.html";
     private static final String SUCCESS_ADMIN = "searchUser.jsp";
     private static final String SUCCESS_USER = "store.jsp";
+
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -37,24 +41,32 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        try{
+        try {
             String user = request.getParameter("txtUserID");
             String password = request.getParameter("txtPassword");
             String status = "active";
             UserDAO dao = new UserDAO();
             UserDTO dto = dao.checkLogin(user, password, status);
-            if(dto!= null){
+            if (dto != null) {
                 HttpSession session = request.getSession();
+                String userNow = dto.getUserID();
+                session.setAttribute("NOW", userNow);
                 session.setAttribute("USER", dto);
-                if(dto.getRoleID().equals("AD")){
+                if (dto.getRoleID().equals("AD")) {
                     url = SUCCESS_ADMIN;
-                }else if(dto.getRoleID().equals("US")){
-                    url = SUCCESS_USER;
+                } else if (dto.getRoleID().equals("US")) {
+                    CarDAO car = new CarDAO();
+                    List<CarDTO> carList = car.loadCar();
+                    if (carList != null) {
+                        HttpSession sessionC = request.getSession();
+                        sessionC.setAttribute("LISTCAR", carList);
+                        url = SUCCESS_USER;
+                    }
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             log("Have error at login controller" + e.toString());
-        }finally{
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

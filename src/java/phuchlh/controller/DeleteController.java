@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import phuchlh.user.UserDAO;
 
 /**
@@ -19,8 +20,8 @@ import phuchlh.user.UserDAO;
  */
 public class DeleteController extends HttpServlet {
 
-    private static final String ERROR = "searchUser.jsp";
-    private static final String SUCCESS = "SearchController";
+    private static final String ERROR = "error.html";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,15 +35,21 @@ public class DeleteController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        try{
-            String userID = request.getParameter("txtUserDelete");
+        try {
+            String userID = request.getParameter("deleteUser");
+            String searchValue = request.getParameter("lastSearchValue");
             UserDAO dao = new UserDAO();
             boolean check = dao.deleteUser(userID);
-            if(check) url = SUCCESS;
-        }catch(Exception e){
+            if (check) {
+                url = "MainController"
+                        + "?btAction=Search"
+                        + "&txtSearch=" + searchValue;
+            }
+
+        } catch (Exception e) {
             log("Have error at delete controller" + e.toString());
-        }finally{
-            request.getRequestDispatcher(url).forward(request, response);
+        } finally {
+            response.sendRedirect(url);
         }
     }
 

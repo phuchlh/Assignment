@@ -21,6 +21,7 @@ public class LogoutController extends HttpServlet {
 
     private static final String ERROR = "login.html";
     private static final String SUCCESS = "login.html";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,15 +35,15 @@ public class LogoutController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        try{
+        try {
             HttpSession session = request.getSession(false);
-            if(session!=null){
+            if (session != null) {
                 session.invalidate();
                 url = SUCCESS;
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             log("Have error at logout controller" + e.toString());
-        }finally{
+        } finally {
             response.sendRedirect(url);
         }
     }

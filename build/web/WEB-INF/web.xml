@@ -20,6 +20,38 @@
         <servlet-name>DeleteController</servlet-name>
         <servlet-class>phuchlh.controller.DeleteController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateController</servlet-name>
+        <servlet-class>phuchlh.controller.UpdateController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateController</servlet-name>
+        <servlet-class>phuchlh.controller.CreateController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetCarController</servlet-name>
+        <servlet-class>phuchlh.controller.GetCarController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddToCartController</servlet-name>
+        <servlet-class>phuchlh.controller.AddToCartController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewCartController</servlet-name>
+        <servlet-class>phuchlh.controller.ViewCartController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckoutController</servlet-name>
+        <servlet-class>phuchlh.controller.CheckoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShoppingController</servlet-name>
+        <servlet-class>phuchlh.controller.ShoppingController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RemoveController</servlet-name>
+        <servlet-class>phuchlh.controller.RemoveController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainController</servlet-name>
         <url-pattern>/MainController</url-pattern>
@@ -39,6 +71,38 @@
     <servlet-mapping>
         <servlet-name>DeleteController</servlet-name>
         <url-pattern>/DeleteController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateController</servlet-name>
+        <url-pattern>/UpdateController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateController</servlet-name>
+        <url-pattern>/CreateController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetCarController</servlet-name>
+        <url-pattern>/GetCarController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddToCartController</servlet-name>
+        <url-pattern>/AddToCartController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewCartController</servlet-name>
+        <url-pattern>/ViewCartController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutController</servlet-name>
+        <url-pattern>/CheckoutController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShoppingController</servlet-name>
+        <url-pattern>/ShoppingController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveController</servlet-name>
+        <url-pattern>/RemoveController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
