@@ -12,6 +12,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="style.css">
+        <!-- CSS only -->
+<!--        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+              integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
         <title>STORE</title>
     </head>
     <body>
@@ -38,7 +42,7 @@
             if ((listCar != null) && (!listCar.isEmpty())) {
                 System.out.println("store " + listCar.size());
         %>
-        <table border="1">
+        <table border="1" style="width: 100%; text-align: center;">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -47,26 +51,32 @@
                     <th>Type</th>
                     <th>Image</th>
                     <th>Quantity</th>
-                    <th>Status</th>
                     <th>Price</th>
+                    <th>Status</th>
                     <th>Add</th>
                 </tr>
             </thead>
             <tbody>
                 <%
                     int count = 0;
+                    String carStatus;
                     for (CarDTO car : listCar) {
+                        carStatus = car.getStatus().equals("active") ? "<span>&#10004;</span>" : "<span>&#10006;</span>";
                 %>
             <form action="MainController">
-                <tr>
+                <tr <% if (count % 2 == 0)
+                    %> class="even" <%
+                        else %> class="odd"<%
+                    %>
+                    >
                     <td> <%= ++count%> </td>
                     <td><%= car.getProductID()%></td>
                     <td><%= car.getProductName()%></td>
                     <td><%= car.getCategoryID()%></td>
-                    <td><img src="<%= car.getImage()%>" alt="" height=100 width=auto></img></td>
+                    <td><img src="<%= car.getImage()%>" alt="" height=100px width=auto></img></td>
                     <td><%= car.getQuantity()%></td>
-                    <td><%= car.getStatus()%></td>
                     <td><%= car.getPrice()%></td>
+                    <td><%= carStatus%></td>
                     <td>
                         <%
                             if (car.getQuantity() <= 0) {

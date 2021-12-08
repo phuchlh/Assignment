@@ -12,6 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>ADMIN</title>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <h1>Search user</h1>
@@ -27,19 +28,20 @@
             }
         %>
         <h3>Welcome admin: <%= loginUser.getFullname()%></h3>
-        <form action="MainController">
+        <form action="MainController" method="POST">
             <input type="submit" value="Logout" name="btAction" />
+            <input type="submit" value="Car Dashboard" name="btAction" />
         </form>
 
         <form action="MainController">
-            Search: <input type="text" name="txtSearch" value="<%= search%>" />
-            <input type="submit" value="Search" name="btAction" />
+            <input type="text" name="txtSearch" value="<%= search%>" placeholder="Enter a user id"/>
+            <input class="button-search" type="submit" value="Search" name="btAction" />
         </form>
         <%
             List<UserDTO> listUser = (List<UserDTO>) request.getAttribute("LIST_USER");
             if ((listUser != null) && (!listUser.isEmpty())) {
         %>
-        <table border="1">
+        <table border="1" class="table-data" >
             <thead>
                 <tr>
                     <th>No.</th>
@@ -66,7 +68,11 @@
                         boolean checkDelete = (user.getUserID()).equals(userNow);
                 %>
             <form action="MainController">
-                <tr>
+                <tr <% if (count % 2 == 0) {
+                    %> class="even" <%
+                    } else %> class="odd" <%
+                    %>
+                    >
                     <td><%= ++count%></td>
                     <td>
                         <input type="text" name="txtUserID" value="<%= user.getUserID()%>" />
@@ -92,7 +98,7 @@
                         <%
                             if (checkDelete) {
                         %>
-                        <p>Mission impossible because this user are currently available</p>
+                        <p>Your account</p>
                         <%
                         } else if (user.getStatus().equals("disable")) {
                         %>

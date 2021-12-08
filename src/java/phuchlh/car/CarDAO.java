@@ -18,21 +18,22 @@ import phuchlh.utils.DBUtils;
  * @author Phúc
  */
 public class CarDAO {
-    public List<CarDTO> loadCar() throws SQLException, ClassNotFoundException{
+
+    public List<CarDTO> loadCar() throws SQLException, ClassNotFoundException {
         List<CarDTO> list = null;
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
             con = DBUtils.getConnection();
-            if(con!=null){
+            if (con != null) {
                 String sql = "select productID, productName, quantity, price, categoryID, status, image "
                         + "from tblProducts ";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
-                if(rs!=null){
+                if (rs != null) {
                     list = new ArrayList<>();
-                    while(rs.next()){
+                    while (rs.next()) {
                         String productID = rs.getString("productID");
                         String productName = rs.getString("productName");
                         int quantity = rs.getInt("quantity");
@@ -45,7 +46,7 @@ public class CarDAO {
                     return list;
                 }
             }
-        }finally{
+        } finally {
             if (rs != null) {
                 rs.close();
             }
@@ -57,5 +58,38 @@ public class CarDAO {
             }
         }
         return list;
+    }
+
+    public boolean editCar(CarDTO car) throws SQLException {
+        boolean check = false;
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBUtils.getConnection();
+            if (con != null) {
+                String sql = "update tblProducts "
+                        + "set productName = ?, quantity = ?, price = ?, status = ?, image = ? "
+                        + "where productID = ? ";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, car.getProductName());
+                stm.setInt(2, car.getQuantity());
+                stm.setString(3, car.getPrice());
+                stm.setString(4, car.getStatus());
+                stm.setString(5, car.getImage());
+                System.out.println(car.getImage());
+                stm.setString(6, car.getProductID());
+                check = stm.executeUpdate() > 0 ? true : false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return check;
     }
 }

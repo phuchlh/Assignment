@@ -6,23 +6,24 @@
 package phuchlh.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import phuchlh.cart.CartDAO;
-import phuchlh.cart.CartDTO;
+import phuchlh.car.CarDAO;
+import phuchlh.car.CarDTO;
 
 /**
  *
- * @author Phúc
+ * @author Phuc
  */
-public class RemoveController extends HttpServlet {
-
+public class CarDashboardController extends HttpServlet {
+    
+    private static final String SUCCESS = "dashboard.jsp";
     private static final String ERROR = "error.html";
-    private static final String SUCCESS = "cart.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,30 +37,17 @@ public class RemoveController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        try {
-            String orderID = request.getParameter("txtOrderID");
-            String userID = request.getParameter("txtUserID");
-            CartDAO dao = new CartDAO();
-            HttpSession session = request.getSession();
-            List<CartDTO> cart = (List<CartDTO>) session.getAttribute("CART");
-            if (cart != null) {
-                boolean check = dao.changeStatus(orderID);
-                if (check) {
-                    List<CartDTO> cartList = dao.getProductFromCart(userID);
-                    if (cartList.isEmpty()) {
-                        cartList=null;
-                        session.setAttribute("CART", cartList);
-                        url = SUCCESS;
-                    } else {
-                        System.out.println(cartList.size());
-                        session.setAttribute("CART", cartList);
-                        url = SUCCESS;
-                    }
-                }
+        try{
+            CarDAO car = new CarDAO();
+            List<CarDTO> carList = car.loadCar();
+            if(carList != null){
+                HttpSession session = request.getSession();
+                session.setAttribute("LISTCAR", carList);
+                url = SUCCESS;
             }
-        } catch (Exception e) {
-            log("Have error at remove controller" + e.toString());
-        } finally {
+        }catch(Exception e){
+            log("Have error at dashboard controller" + e.toString());
+        }finally{
             request.getRequestDispatcher(url).forward(request, response);
         }
     }

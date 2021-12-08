@@ -9,21 +9,35 @@ and open the template in the editor.
         <title>LOGIN</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="loginCSS.css" rel="stylesheet">
+        <link rel="stylesheet" href="login.css"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     </head>
     <body>
-        <h1>Login page</h1>
-
-        <form action="MainController" method="POST">
-            userID<input type="text" name="txtUserID" value="" /></br>
-            password: <input type="password" name="txtPassword" value="" /></br>
-            <input type="submit" value="Login" name="btAction" />
-            <input type="reset" value="Reset" /></br>
-        </form>
-                <form action="MainController">
-                    <input type="submit" value="Shopping" name="btAction" />
-                </form>
-        <!--<a href="store.jsp">shop</a>-->
-        Dont have an account? <a href="insert.jsp">register now</a>
+        <div class="login">
+            <h1>Login</h1>
+            <form action="MainController" method="POST">
+                <div class="input-form">
+                    <lablel>Username</lablel><input type="text" name="txtUserID" value="" />
+                </div>
+                <div class="input-form">
+                    <lablel>Password</lablel><input type="password" name="txtPassword" value="" />
+                </div>
+                <input class="submit-button" type="submit" value="LOGIN" name="btAction" />
+            </form>
+            <p>or</p>
+            <div class="login-by-google">
+                <a href="https://accounts.google.com/o/oauth2/auth?scope=profile&redirect_uri=http://localhost:8084/Assignment3W/LoginGoogleHandler&response_type=code
+                   &client_id=748480278469-3v0ot1bi5eu5c8aqc1evu56n15t5bm8s.apps.googleusercontent.com&approval_prompt=force">Login with Google</a>
+            </div>
+            <div class="register">
+                <label>Dont have an account? </label>
+                <a href="insert.jsp">register now</a>
+            </div>
+            <form action="MainController">
+                <input class="submit-button" type="submit" value="Shopping" name="btAction" />
+            </form>
+        </div>
     </body>
 </html>

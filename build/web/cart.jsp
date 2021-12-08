@@ -13,6 +13,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>CART</title>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <h1>Your selected car:</h1>
@@ -20,7 +21,7 @@
             List<CartDTO> cart = (List<CartDTO>) session.getAttribute("CART");
             if (cart != null) {
         %>
-        <table border="1">
+        <table border="1" style="width: 100%; text-align: center;">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -40,7 +41,7 @@
                     for (CartDTO c : cart) {
                         total += Integer.parseInt(c.getPrice()) * c.getQuantity();
                 %>
-            <form action="MainController">
+            <form action="MainController" method="POST">
                 <tr>
                     <td><%= ++count%></td>
                     <td><%= c.getOrderDetailID()%></td>
@@ -51,6 +52,7 @@
                     <td>
                         <input type="submit" value="Remove" name="btAction" />
                         <input type="hidden" name="txtUserID" value="<%= userID %>" />
+                        <input type="hidden" name="txtOrderID" value="<%= c.getOrderDetailID()%>" />
                     </td>
                 </tr>
             </form>
@@ -62,7 +64,7 @@
     <p>Wanna add more car, click <a href="store.jsp">here</a></p>
     <h1>Total price: <%= total%>$</h1>
     <form action="MainController">
-        <input type="submit" value="Checkout" name="btAction" />
+        <input type="submit" value="Checkout" name="btAction" id="checkout" onclick="handleClickCheckOut()"/>
         <input type="hidden" name="txtTotal" value="<%= total%>" />
     </form>
     <%
@@ -72,6 +74,12 @@
     <%
 }
     %>
+    <script>
+        function handleClickCheckOut(){
+        var checkout = document.getElementById(checkout)
+        alert("Check out successfully, your car(s) will be delivery soon");
+        }
+    </script>
     
 </body>
 </html>

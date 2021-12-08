@@ -160,7 +160,7 @@ public class CartDAO {
                 stm.setString(4, status);
                 check = stm.executeUpdate() > 0 ? true : false;
             }
-        }finally{
+        } finally {
             if (stm != null) {
                 stm.close();
             }
@@ -170,22 +170,23 @@ public class CartDAO {
         }
         return check;
     }
-    
-    public boolean changeStatus(String userID) throws SQLException, ClassNotFoundException{
+
+    public boolean changeStatus(String orderID) throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stm = null;
         boolean check = false;
         try {
             con = DBUtils.getConnection();
-            if(con!=null){
+            if (con != null) {
                 String sql = "update tblOrderDetails "
                         + "set status = 'disable' "
-                        + "where userID = ?";
+                        + "where orderDetailID = ?";
                 stm = con.prepareStatement(sql);
-                stm.setString(1, userID);
-                check = stm.executeUpdate()> 0 ? true:false;
+                stm.setString(1, orderID);
+                check = stm.executeUpdate() > 0 ? true : false;
+                System.out.println("sua roi");
             }
-        }finally{
+        } finally {
             if (stm != null) {
                 stm.close();
             }

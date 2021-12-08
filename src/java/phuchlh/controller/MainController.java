@@ -30,6 +30,8 @@ public class MainController extends HttpServlet {
     private static final String CHECKOUT_CONTROLLER = "CheckoutController";
     private static final String SHOPPING_CONTROLLER = "ShoppingController";
     private static final String REMOVE_CONTROLLER = "RemoveController";
+    private static final String CAR_DASHBOARD_CONTROLLER = "CarDashboardController";
+    private static final String UPDATE_CAR_CONTROLLER = "UpdateCarController";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -47,7 +49,7 @@ public class MainController extends HttpServlet {
         try{
             if("".equals(action)) {
                 
-            }else if("Login".equals(action)) {
+            }else if("LOGIN".equals(action)) {
                 url = LOGIN_CONTROLLER;
             }else if("Logout".equals(action)) {
                 url = LOGOUT_CONTROLLER;
@@ -69,6 +71,10 @@ public class MainController extends HttpServlet {
                 url = SHOPPING_CONTROLLER;
             }else if("Remove".equals(action)) {
                 url = REMOVE_CONTROLLER;
+            }else if("Car Dashboard".equals(action)){
+                url = CAR_DASHBOARD_CONTROLLER;
+            }else if("Update car".equals(action)){
+                url = UPDATE_CAR_CONTROLLER;
             }
         }finally{
             request.getRequestDispatcher(url).forward(request, response);

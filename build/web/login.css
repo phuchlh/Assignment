@@ -1,0 +1,134 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Aug 16, 2021, 6:24:50 PM
+    Author     : Phúc
+*/
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+body{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(145,167,255);
+    background: linear-gradient(35deg, rgba(145,167,255,1) 0%, rgba(190,75,219,1) 100%);
+    font-family: 'Inter', sans-serif;
+} 
+h1, form, a, p{
+    padding: 10px;
+}
+.login{
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 40px 24px;
+}
+.input-form{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 32px;
+    color: #495057;
+}
+.input-form input{
+    display: block;
+    padding: 4px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+    color: #868e96;
+}
+.input-form input:focus{
+    outline: none;
+}
+h1{
+    text-align: center;
+    font-weight: 700;
+    font-size: 40px;
+    letter-spacing: 1.3px;
+    color: #495057;
+    margin-bottom: 24px;
+}
+.submit-button{
+    border: none;
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: rgb(145,167,255);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s linear;
+}
+.submit-button:hover{
+    background-color: #be4bdb;
+    background-color: linear-gradient(252deg, rgba(145,167,255,1) 0%, rgba(190,75,219,1) 100%);
+}
+p{
+    text-align: center;
+    font-size: 18px;
+    color: #495057;
+}
+a{
+    text-align: center;
+}
+.login-by-google{
+    text-align: center;
+    padding: 12px;
+}
+.register{
+    padding: 24px;
+}

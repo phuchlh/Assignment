@@ -203,6 +203,7 @@ public class UserDAO {
                 stm.setString(5, user.getStatus());
                 stm.setString(6, user.getPassword());
                 check = stm.executeUpdate() > 0 ? true : false;
+                System.out.println(check);
             }
         } finally {
             if (stm != null) {
