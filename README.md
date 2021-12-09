@@ -4,6 +4,8 @@
 
 * Authenticator between user and admin, each role have different feature
 
+* Login with **Google** account
+
 * User CRUD only for admin role
 
 * About user role, I have a small car shop, includes add to cart, delete and checkout
